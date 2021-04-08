@@ -1,0 +1,21 @@
+.connection--page{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    margin:auto;
+    width: 30%;
+        .connection--page-title{
+            text-align: center;
+        }
+        .connection--page-input{
+            width: 100%;
+            margin: 5px;
+        }
+        .connection--page-submitContainer{
+            width: 100%;
+            margin: 5px;
+            text-align: center;
+        }
+}
