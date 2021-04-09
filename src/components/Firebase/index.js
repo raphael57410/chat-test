@@ -20,8 +20,8 @@ export const FbApp = () => {
   // initialisation et connection a la base de données
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
-    return firebase.firestore();
   }
+  return firebase.firestore();
 };
 
 /**
@@ -31,22 +31,43 @@ export const FbApp = () => {
 * @param {function setIsLogged(boolean) {change state from isLogged}}
 *
 */
-  export const FbConnect = (email,password,isLogged,loader) => {
-    FbApp();
+  export const FbConnect = (email,password,isLogged,loader,setMessage) => {
+
     firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
-      const docRef = firebase.firestore().doc(`/users/${user.uid}`);
-      docRef.get().then((data) => (console.log(data.data())));
+      isLogged(true);
+      loader(false);
+      
+      // ...
+    })
+    .catch((error) => {
+      if (error) {
+        setTimeout(loader(false), 3000);
+        setMessage('les informations entrées son incorrect')
+        console.log(error);
+      }
+      // ..
+    });
+  };
+
+  export const FbAddNewUser = (email,password,isLogged,loader,setMessage,) => {
+    
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
       isLogged(true);
       loader(false);
       // ...
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      if (error) {
+        setTimeout(loader(false), 3000);
+        setMessage('les informations entrées son incorrect')
+        console.log(error);
+      }
       // ..
     });
-
-};
+  };
