@@ -14,7 +14,7 @@ import { FbApp } from 'src/components/Firebase';
 // == Composant
 const App = () => {
 const [loading, setLoading] = useState(false);
-const [isLogged, setIsLogged] = useState(false);
+const [isLogged, setIsLogged] = useState(true);
 const [message, setMessage] = useState('');
 
 FbApp();
@@ -32,7 +32,7 @@ return(
     </Route>
     {isLogged &&
       <Route exact path="/chat">
-        <ChatPage />
+        <ChatPage database={FbApp}/>
       </Route>
     }
   </Switch>
