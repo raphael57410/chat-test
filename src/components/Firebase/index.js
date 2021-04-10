@@ -39,6 +39,7 @@ firebase.auth().signInWithEmailAndPassword(email, password)
     const user = userCredential.user;
     isLogged(true);
     localStorage.setItem('is-logged', true);
+    localStorage.setItem('user-ID', FbUserID());
     loader(false);
     
     // ...
@@ -86,4 +87,8 @@ export const FbFetchAllMessage = (setMessage,allMessage,database) => {
 export const FbUserID = () => {
   //firebase.auth().currentUser((user) => user);
    return firebase.auth().currentUser.uid;
+};
+
+export const FbSendMessage = (database, newMessage) => {
+  database().collection("message").add(newMessage);
 };

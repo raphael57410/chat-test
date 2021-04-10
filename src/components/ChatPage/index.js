@@ -1,7 +1,8 @@
 // == Import npm
 import React, { useEffect, useState } from 'react';
 import { set } from 'react-hook-form';
-import { FbFetchAllMessage, FbUserID } from 'src/components/Firebase';
+import { FbFetchAllMessage, FbSendMessage } from 'src/components/Firebase';
+import { useForm } from 'react-hook-form';
 
 
 // == Import SCSS
@@ -9,8 +10,9 @@ import './chatpage.scss';
 
 
 // == Composant
-const ChatPage = ({database}) => {
+const ChatPage = ({database, userId}) => {
     const [message, setMessage] = useState([]);
+    const {register, handleSubmit} = useForm();
     const messageRef = database().collection('message').doc('QKSFnp0oLtSFzsx3IRRQ');
     let allMessage = []
 
@@ -26,10 +28,16 @@ const ChatPage = ({database}) => {
     
     useEffect(() => {
         FbFetchAllMessage(setMessage,allMessage,database)
-    },[]);
+    });
 
-    //TODO: ajouter des données via l'id de l'utilisateur
-    //console.log(FbUserID());
+    //ajouter un message via l'id de l'utilisateur
+    const sendNewMessage = (newMessage) => {
+        const messageObjevt = {
+            message: newMessage.message,
+            userId,
+        }
+        FbSendMessage(database,messageObjevt);
+    }
 return(
 <div className="chatpage--container">
     <h1>coucou ici la page chat</h1>
@@ -38,6 +46,10 @@ return(
          <div key={i} className="chatpage--message">{message.message}</div>
         )
     }
+    <form className="chatpage--input-container" onSubmit={handleSubmit(sendNewMessage)} >
+        <input className="chatpage--input" type="text" name="message" {...register('message')} />
+        <input className="chatpage--button" type="submit" value="envoyer" />
+    </form>
 </div>
   
 )}
