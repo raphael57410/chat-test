@@ -24,50 +24,66 @@ export const FbApp = () => {
   return firebase.firestore();
 };
 
-/**
-*   function on submit connection
-* @param {string} email
-* @param {string} password
-* @param {function setIsLogged(boolean) {change state from isLogged}}
-*
-*/
-  export const FbConnect = (email,password,isLogged,loader,setMessage) => {
+  /**
+  *   function on submit connection
+  * @param {string} email
+  * @param {string} password
+  * @param {function setIsLogged(boolean) {change state from isLogged}}
+  *
+  */
+export const FbConnect = (email,password,isLogged,loader,setMessage) => {
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      isLogged(true);
-      loader(false);
-      
-      // ...
-    })
-    .catch((error) => {
-      if (error) {
-        setTimeout(loader(false), 3000);
-        setMessage('les informations entrées son incorrect')
-        console.log(error);
-      }
-      // ..
-    });
-  };
-
-  export const FbAddNewUser = (email,password,isLogged,loader,setMessage,) => {
+firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    isLogged(true);
+    localStorage.setItem('is-logged', true);
+    loader(false);
     
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      isLogged(true);
-      loader(false);
-      // ...
-    })
-    .catch((error) => {
-      if (error) {
-        setTimeout(loader(false), 3000);
-        setMessage('les informations entrées son incorrect')
-        console.log(error);
-      }
-      // ..
+    // ...
+  })
+  .catch((error) => {
+    if (error) {
+      setTimeout(loader(false), 3000);
+      setMessage('les informations entrées son incorrect')
+      console.log(error);
+    }
+    // ..
+  });
+};
+
+export const FbAddNewUser = (email,password,isLogged,loader,setMessage,) => {
+    
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    isLogged(true);
+    loader(false);
+    // ...
+  })
+  .catch((error) => {
+    if (error) {
+      setTimeout(loader(false), 3000);
+      setMessage('les informations entrées son incorrect')
+      console.log(error);
+    }
+    // ..
+  });
+};
+
+export const FbFetchAllMessage = (setMessage,allMessage,database) => {
+  database().collection("message").get().then((querySnapshot) => {    
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        allMessage.push(doc.data())
     });
-  };
+    setMessage(allMessage);
+    });
+};
+
+export const FbUserID = () => {
+  //firebase.auth().currentUser((user) => user);
+   return firebase.auth().currentUser.uid;
+};

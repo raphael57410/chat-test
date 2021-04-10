@@ -1,6 +1,7 @@
 // == Import npm
 import React, { useEffect, useState } from 'react';
 import { set } from 'react-hook-form';
+import { FbFetchAllMessage, FbUserID } from 'src/components/Firebase';
 
 
 // == Import SCSS
@@ -12,6 +13,7 @@ const ChatPage = ({database}) => {
     const [message, setMessage] = useState([]);
     const messageRef = database().collection('message').doc('QKSFnp0oLtSFzsx3IRRQ');
     let allMessage = []
+
     /*
     database().collection('message').add({
         message: 'coucou',
@@ -23,16 +25,11 @@ const ChatPage = ({database}) => {
     });*/
     
     useEffect(() => {
-        database().collection("message").get().then((querySnapshot) => {
-            
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            allMessage.push(doc.data())
-        });
-        setMessage(allMessage);
-    });
-      },[]);
-      
+        FbFetchAllMessage(setMessage,allMessage,database)
+    },[]);
+
+    //TODO: ajouter des données via l'id de l'utilisateur
+    //console.log(FbUserID());
 return(
 <div className="chatpage--container">
     <h1>coucou ici la page chat</h1>
