@@ -18,6 +18,7 @@ export const DBconnect = (email,password,loader,isLogged,setMessage) => {
         console.log('front reponse BONJOUR :' + reponse.data.email);
         if (reponse.status === 200) {
             loader(false);
+            localStorage.setItem('TOKEN', reponse.data.TOKEN);
             isLogged(true);
         }
     })
