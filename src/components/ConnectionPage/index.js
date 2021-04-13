@@ -1,14 +1,14 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { FbConnect, FbAddNewUser } from 'src/components/Firebase';
+import { DBconnect, DBaddUser } from 'src/components/Request';
 
 // == Import SCSS
 import './connectionPage.scss';
 
 
 // == Composant
-const ConnectionPage = ( { isLogged, loader, message, setMessage } ) => {
+const ConnectionPage = ( {loader, message,isLogged,setMessage } ) => {
 
     const {register, handleSubmit} = useForm();
     const [addUser, setAddUser] = useState(false);
@@ -17,14 +17,17 @@ const ConnectionPage = ( { isLogged, loader, message, setMessage } ) => {
     *   function on submit 
     * @param {string} data
     */
-    const onSubmit = data => {
-    loader(true);
-    FbConnect(data.email,data.password,isLogged,loader,setMessage);
+    const onSubmit = (data) => {
+        loader(true);
+        DBconnect(data.email,data.password,loader,isLogged,setMessage);
     };
 
+    /**
+     * @param  {string} data
+     */
     const addNewUser = (data) => {
         loader(true);
-        FbAddNewUser(data.email,data.password,isLogged,loader,setMessage)
+        DBaddUser(data.email,data.password,loader);
     };
 
 return(

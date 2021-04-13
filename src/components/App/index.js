@@ -9,7 +9,6 @@ import './styles.css';
 //== Import des composants
 import ConnectionPage from 'src/components/ConnectionPage';
 import ChatPage from 'src/components/ChatPage';
-import { FbApp } from 'src/components/Firebase';
 
 // == Composant
 const App = () => {
@@ -17,8 +16,6 @@ const [loading, setLoading] = useState(false);
 const [isLogged, setIsLogged] = useState(false);
 const [message, setMessage] = useState('');
 const userId = localStorage.getItem('user-ID');
-
-FbApp();
 
 // avec les hook d'effets on enregistre les states souhaité dans le localstorage
 useEffect(() => {
@@ -45,7 +42,7 @@ return(
     </Route>
     {isLogged &&
       <Route exact path="/chat">
-        <ChatPage database={FbApp} userId={userId}/>
+        <ChatPage userId={userId}/>
       </Route>
     }
   </Switch>

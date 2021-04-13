@@ -1,7 +1,5 @@
 // == Import npm
 import React, { useEffect, useState } from 'react';
-import { set } from 'react-hook-form';
-import { FbFetchAllMessage, FbSendMessage } from 'src/components/Firebase';
 import { useForm } from 'react-hook-form';
 
 
@@ -10,25 +8,12 @@ import './chatpage.scss';
 
 
 // == Composant
-const ChatPage = ({database, userId}) => {
+const ChatPage = ({userId}) => {
     const [message, setMessage] = useState([]);
     const {register, handleSubmit} = useForm();
-    const messageRef = database().collection('message').doc('QKSFnp0oLtSFzsx3IRRQ');
-    let allMessage = []
-
-    /*
-    database().collection('message').add({
-        message: 'coucou',
-    }).then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-    })
-    .catch((error) => {
-        console.error("Error adding document: ", error);
-    });*/
     
     useEffect(() => {
-        FbFetchAllMessage(setMessage,allMessage,database)
-    });
+    },[]);//TODO:a voir le []
 
     //ajouter un message via l'id de l'utilisateur
     const sendNewMessage = (newMessage) => {
@@ -36,7 +21,6 @@ const ChatPage = ({database, userId}) => {
             message: newMessage.message,
             userId,
         }
-        FbSendMessage(database,messageObjevt);
     }
 return(
 <div className="chatpage--container">
