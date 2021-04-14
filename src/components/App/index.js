@@ -42,7 +42,7 @@ return(
     </Route>
     {isLogged &&
       <Route exact path="/chat">
-        <ChatPage userId={userId}/>
+        <ChatPage userId={userId} loader={setLoading}/>
       </Route>
     }
   </Switch>

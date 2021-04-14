@@ -4,6 +4,7 @@
     border: 2px solid black;
     text-align: center;
     overflow:auto;
+
     .chatpage--message{
         width: 300px;
         margin: 50px auto;
@@ -29,6 +30,8 @@
     }
     .chatpage--input-container{
         width: 100%;
+        position: sticky;
+        bottom: 10px;
         .chatpage--input{
             width: 50%;
         }

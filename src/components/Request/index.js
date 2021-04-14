@@ -2,6 +2,8 @@ import axios from 'axios';
 
 const API_URL_LOGIN = 'http://localhost:3000/login';
 const API_URL_ADD_USER = 'http://localhost:3000/addUser';
+const API_URL_FETCH_ALL_MESSAGES = 'http://localhost:3000/messages';
+const API_URL_ADD_NEW_MESSAGE = 'http://localhost:3000/addMessage';
 
 /**
  * @param  {string} email
@@ -25,8 +27,6 @@ export const DBconnect = (email,password,loader,isLogged,setMessage) => {
     .catch((error) =>{
         if (error) {
             setMessage('Les informations entrées sont incorrect!');
-            setTimeout(loader(false),5000)
-            clearTimeout();
         }
     });
 };
@@ -47,6 +47,32 @@ export const DBaddUser = (email,password,loader) => {
     })
     .catch((error) =>{
         console.log('front reponse ERREUR:' + error);
-        //setTimeout(loader(false),5000);
+    });
+};
+
+/**
+ * @param  {string} TOKEN
+ * @param  {func} setMessage
+ *
+ */
+ export const fetchAllMessages = (TOKEN,setMessage) => {
+    axios.get(API_URL_FETCH_ALL_MESSAGES,{ headers: { Authorization: `Bearer ${TOKEN}` } })
+    .then((reponse)=>{
+        console.log(reponse.data);
+        setMessage(reponse.data)
+    })
+    .catch((error) =>{
+        console.log('front reponse ERREUR:' + error);
+    });
+};
+
+
+ export const DBAddNewMessage = (newMessage, TOKEN) => {
+    axios.post(API_URL_ADD_NEW_MESSAGE,{headers: { Authorization: `Bearer ${TOKEN}` },newMessage})
+    .then((reponse)=>{
+        console.log(reponse);
+    })
+    .catch((error) =>{
+        console.log('front reponse ERREUR:' + error);
     });
 };
