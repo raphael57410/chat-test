@@ -8,7 +8,7 @@ import './connectionPage.scss';
 
 
 // == Composant
-const ConnectionPage = ( {loader, message,isLogged,setMessage } ) => {
+const ConnectionPage = ( {loader, message,isLogged,setMessage,setCookie } ) => {
 
     const {register, handleSubmit} = useForm();
     const [addUser, setAddUser] = useState(false);
@@ -19,7 +19,7 @@ const ConnectionPage = ( {loader, message,isLogged,setMessage } ) => {
     */
     const onSubmit = (data) => {
         loader(true);
-        DBconnect(data.email,data.password,loader,isLogged,setMessage);
+        DBconnect(data.email,data.password,loader,isLogged,setMessage,setCookie);
     };
 
     /**

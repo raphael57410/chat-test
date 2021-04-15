@@ -2,6 +2,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { CookiesProvider } from "react-cookie";
 
 // == Import : local
 // Composants
@@ -12,7 +13,9 @@ import App from 'src/components/App';
 //    => crée une structure d'objets imbriqués (DOM virtuel)
 const rootReactElement = (
     <Router>
-        <App />
+        <CookiesProvider>
+            <App />
+        </CookiesProvider>
     </Router>
 );
 // 2. La cible du DOM (là où la structure doit prendre vie dans le DOM)

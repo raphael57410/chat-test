@@ -10,7 +10,7 @@ const API_URL_ADD_NEW_MESSAGE = 'http://localhost:3000/addMessage';
  * @param  {string} password
  * @param  {func} loader
  */
-export const DBconnect = (email,password,loader,isLogged,setMessage) => {
+export const DBconnect = (email,password,loader,isLogged,setMessage,setCookie) => {
     axios.post(API_URL_LOGIN,{
         email,
         password,
@@ -20,7 +20,8 @@ export const DBconnect = (email,password,loader,isLogged,setMessage) => {
         console.log('front reponse BONJOUR :' + reponse.data.email);
         if (reponse.status === 200) {
             loader(false);
-            localStorage.setItem('TOKEN', reponse.data.TOKEN);
+            setCookie('TOKEN',reponse.data.TOKEN);
+            localStorage.setItem('userID', reponse.data.id);
             isLogged(true);
         }
     })
@@ -58,11 +59,11 @@ export const DBaddUser = (email,password,loader) => {
  export const fetchAllMessages = (TOKEN,setMessage) => {
     axios.get(API_URL_FETCH_ALL_MESSAGES,{ headers: { Authorization: `Bearer ${TOKEN}` } })
     .then((reponse)=>{
-        console.log(reponse.data);
         setMessage(reponse.data)
     })
     .catch((error) =>{
         console.log('front reponse ERREUR:' + error);
+        localStorage.clear();
     });
 };
 

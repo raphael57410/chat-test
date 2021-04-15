@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import RingLoader from "react-spinners/RingLoader";
+import { useCookies } from "react-cookie";
 
 // == Import
 import './styles.css';
@@ -15,7 +16,8 @@ const App = () => {
 const [loading, setLoading] = useState(false);
 const [isLogged, setIsLogged] = useState(false);
 const [message, setMessage] = useState('');
-const userId = localStorage.getItem('user-ID');
+const [cookies, setCookie] = useCookies();
+const userId = localStorage.getItem('userID');
 
 // avec les hook d'effets on enregistre les states souhaité dans le localstorage
 useEffect(() => {
@@ -38,11 +40,13 @@ return(
   <Switch>
     <Route exact path="/">
       {isLogged && <Redirect to="/chat" />}
-      {!isLogged && <ConnectionPage isLogged={setIsLogged} loader={setLoading} message={message} setMessage={setMessage}/>}
+      {!isLogged && <ConnectionPage isLogged={setIsLogged} loader={setLoading} message={message} setMessage={setMessage} setCookie={setCookie} />}
     </Route>
+    {!isLogged && <Redirect to="/" />}
     {isLogged &&
       <Route exact path="/chat">
-        <ChatPage userId={userId} loader={setLoading}/>
+        
+        <ChatPage userId={userId} loader={setLoading} cookies={cookies} setIsLogged={setIsLogged}/>
       </Route>
     }
   </Switch>
