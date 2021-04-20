@@ -6,6 +6,7 @@ import { useCookies } from "react-cookie";
 
 // == Import
 import './styles.css';
+import 'animate.css'
 
 //== Import des composants
 import ConnectionPage from 'src/components/ConnectionPage';

@@ -31,7 +31,7 @@ const ConnectionPage = ( {loader, message,isLogged,setMessage,setCookie } ) => {
     };
 
 return(
-    <div className="connection--page">
+    <div className="connection--page animate__animated animate__backInLeft">
         <h1 className="connection--page-title">{addUser ? 'Inscription' : 'connexion'}</h1>
     <form className="connection--page-form" onSubmit={!addUser ? handleSubmit(onSubmit) : handleSubmit(addNewUser)}>
 

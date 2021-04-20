@@ -1,11 +1,10 @@
-.connection--page{
+.connection--page.animate__animated.animate__backInLeft{
     display: flex;
     flex-direction: column;
     border: 2px solid black;
     border-radius: 20px;
     padding: 20px;
     width: 30%;
-    animation: 2s glissement ease-in;
     
         .connection--page-title{
             text-align: center;
@@ -24,14 +23,4 @@
             width: 100%;
             text-align: center;
         }
-}
-
-@keyframes glissement {
-    from {
-      margin-top: 65%;
-      width: 30%;
-    }to{
-        margin-top: 0%;
-        width: 30%;
-    }
 }
